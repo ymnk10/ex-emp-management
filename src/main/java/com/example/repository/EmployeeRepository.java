@@ -33,16 +33,14 @@ public class EmployeeRepository {
 
 
     /**
-     * 従業員一覧情報を年齢順で取得します.
+     * 従業員一覧情報を入社日順で取得します.
      *
      * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
      */
     public List<Employee> findAll() {
         String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics FROM employees ORDER BY hire_date DESC";
 
-        List<Employee> employeeList = template.query(sql, EMPLOYEE_ROW_MAPPER); // ←ここに実行の処理を書く
-
-        System.out.println("findAll()呼ばれた");
+        List<Employee> employeeList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 
         return employeeList;
     }
@@ -60,13 +58,11 @@ public class EmployeeRepository {
 
         Employee employee = template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
 
-        System.out.println("load()呼ばれた");
-
         return employee;
     }
 
     /**
-     * 従業員情報を登録or更新します.
+     * 従業員情報を更新します.
      *
      * @param employee 従業員情報
      */
@@ -75,7 +71,6 @@ public class EmployeeRepository {
 
         String updateSql = "UPDATE employees SET name=:name,image=:image,gender=:gender,hire_date=:hireDate,mail_address=:mailAddress,zip_code=:zipCode,address=:address,telephone=:telephone,salary=:,salary,characteristics=:characteristics WHERE id=:id;";
 
-        // ここに実行処理を書く
         template.update(updateSql, param);
         System.out.println("update()呼ばれた");
     }
