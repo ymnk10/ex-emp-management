@@ -18,5 +18,8 @@ public class AdministratorService {
     @Autowired
     private AdministratorRepository administratorRepository = new AdministratorRepository();
 
+    public void insert(Administrator administrator) {
+        administratorRepository.insert(administrator);
+    }
 
 }
