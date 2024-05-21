@@ -53,11 +53,8 @@ public class EmployeeRepository {
      */
     public Employee load(Integer id) {
         String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics FROM employees WHERE id=:id";
-
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-
         Employee employee = template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
-
         return employee;
     }
 
@@ -68,11 +65,7 @@ public class EmployeeRepository {
      */
     public void update(Employee employee) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
-
-        String updateSql = "UPDATE employees SET name=:name,image=:image,gender=:gender,hire_date=:hireDate,mail_address=:mailAddress,zip_code=:zipCode,address=:address,telephone=:telephone,salary=:,salary,characteristics=:characteristics WHERE id=:id;";
-
+        String updateSql = "UPDATE employees SET name=:name,image=:image,gender=:gender,hire_date=:hireDate,mail_address=:mailAddress,zip_code=:zipCode,address=:address,telephone=:telephone,salary=:salary,characteristics=:characteristics,dependents_count=:dependentsCount WHERE id=:id;";
         template.update(updateSql, param);
-        System.out.println("update()呼ばれた");
     }
-
 }
