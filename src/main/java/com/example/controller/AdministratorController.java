@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 管理者登録時に使用するフォームクラス.
+ * 管理者関連機能の処理の制御を行うコントローラ.
  *
  * @author io.yamanaka
  *
@@ -29,6 +29,7 @@ public class AdministratorController {
 
     @Autowired
     private HttpSession session;
+
     /**
      * 管理者登録画面を表示させるメソッド.
      *
@@ -51,10 +52,10 @@ public class AdministratorController {
     public String insert(InsertAdministratorForm form){
         Administrator administrator = new Administrator();
         BeanUtils.copyProperties(form, administrator);
-//        administrator.setId(form.getId???);
         administratorService.insert(administrator);
         return "redirect:/";
     }
+
 
     /**
      * ログインページへフォワードするメソッド.
@@ -81,8 +82,19 @@ public class AdministratorController {
             model.addAttribute("message", "メールアドレスまたはパスワードが不正です。");
             return "administrator/login";
         }
-
         session.setAttribute("administratorName", administrator.getName());
         return "redirect:/employee/showList";
+    }
+
+    /**
+     * ログアウト処理をするメソッド.
+     *
+     * @param form ログイン時に入力されたフォーム
+     * @return ログイン画面へリダイレクト
+     */
+    @GetMapping("/logout")
+    public String logout(LoginForm form){
+        session.invalidate();
+        return "redirect:/";
     }
 }
